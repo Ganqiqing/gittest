@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/js/jquery-1.11.1.min.js}"></script>
+</head>
+<body>
+<div id="result"></div>
+<input type="file" id="file">
+<button type="button" onclick="uploadFile()">提交</button>
+
+<script type="text/javascript" th:inline="javascript">
+    function uploadFile() {
+        var path = [[@{/redis/upload}]];
+        var file = $("#file")[0].files[0];
+        var formData = new FormData();
+        formData.append("file", file);
+        $.ajax({
+            type: "post",
+            url: path,
+            processData: false,
+            contentType: false,
+            data:formData,
+            success:function (msg){
+                $("#result").html(msg);
+            }
+        })
+    }
+</script>
+</body>
+</html>
